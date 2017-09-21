@@ -3737,11 +3737,12 @@ environment.
 
 Like `struct` above, `enum` needs both `Copy` and `Clone`. But we also
 force each `enum` to be represented just like `enumReprType`, defined
-above.
+above. Since these are enumerations with numeric values, it is also
+useful for them to derive `PartialEq` and `PartialOrd`.
 
 ```haskell
             let Rust.TypeName repr = toRustType enumReprType
-            let attrs = [ Rust.Attribute "derive(Clone, Copy)"
+            let attrs = [ Rust.Attribute "derive(Clone, Copy, PartialEq, PartialOrd)"
                         , Rust.Attribute (concat [ "repr(", repr, ")" ])
                         ]
             when shouldEmit $
